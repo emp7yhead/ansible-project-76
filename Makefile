@@ -1,10 +1,18 @@
+export ANSIBLE_VAULT_PASSWORD_FILE=$(CURDIR)/vault-password
+
+prepare-vault-password:
+	touch vault-password
+
+view-vault:
+	ansible-vault view group_vars/webservers/vault.yml
+
+edit-vault:
+	ansible-vault edit group_vars/webservers/vault.yml
+
 ping:
 	ansible webservers -i inventory.ini -a 'ping'
 
-uptime:
-	ansible webservers -i inventory.ini -a 'uptime'
-
-playbook:
+deploy:
 	ansible-playbook playbook.yml -i inventory.ini
 
 install-roles:
@@ -13,4 +21,4 @@ install-roles:
 install-collections:
 	ansible-galaxy collection install -r requirements.yml
 
-deploy: install-roles install-collections playbook
+install: install-roles install-collections
