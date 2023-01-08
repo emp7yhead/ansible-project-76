@@ -1,0 +1,32 @@
+- name: install pip packages
+  hosts: all
+  tasks:
+    - name: update packages cache
+      ansible.builtin.apt:
+        update_cache: true
+
+    - name: Install pip and packages
+      ansible.builtin.include_role:
+        name: geerlingguy.pip
+
+- name: deploy redmine
+  hosts: all
+  tasks:
+    - name: create environment variables from template
+      ansible.builtin.template:
+        src: templates/environment.j2
+        dest: '.env'
+        mode: 0644
+
+    - name: run container
+      vars:
+        redmine_port: 3000
+      community.docker.docker_container:
+        name: redmine-app
+        image: redmine
+        published_ports: "{{ redmine_port }}:3000"
+        restart_policy: always
+        restart: true
+        container_default_behavior: no_defaults
+        pull: true
+        env_file: .env
