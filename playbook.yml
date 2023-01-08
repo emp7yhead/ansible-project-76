@@ -1,7 +1,7 @@
-- name: install pip packages
+- name: Install pip packages
   hosts: all
   tasks:
-    - name: update packages cache
+    - name: Update packages cache
       ansible.builtin.apt:
         update_cache: true
 
@@ -9,16 +9,16 @@
       ansible.builtin.include_role:
         name: geerlingguy.pip
 
-- name: deploy redmine
+- name: Deploy redmine
   hosts: all
   tasks:
-    - name: create environment variables from template
+    - name: Create environment variables from template
       ansible.builtin.template:
         src: templates/environment.j2
         dest: '.env'
         mode: 0644
 
-    - name: run container
+    - name: Run container
       community.docker.docker_container:
         name: redmine-app
         image: redmine
@@ -34,4 +34,3 @@
   remote_user: root
   roles:
     - role: datadog.datadog
-  
