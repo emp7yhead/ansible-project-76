@@ -1,5 +1,16 @@
 redmine_port: 3000
+redmine_host: 64.225.83.84
 
 pip_package: python3-pip
 pip_install_packages:
   - name: docker
+
+datadog_site: "datadoghq.com"
+datadog_checks:
+  http_check:
+    init_config:
+    instances:
+      - name: Project status
+        url: "http://localhost:{{ redmine_port }}"
+        timeout: 5
+        method: GET

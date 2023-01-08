@@ -4,3 +4,5 @@ db_username: "{{ vault_db_username }}"
 db_password: "{{ vault_db_password }}"
 db_name: "{{ vault_db_name }}"
 
+datadog_api_key: "{{ vault_datadog_api_key }}"
+datadog_site: "{{ vault_datadog_site }}"

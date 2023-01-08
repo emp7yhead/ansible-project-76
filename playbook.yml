@@ -19,8 +19,6 @@
         mode: 0644
 
     - name: run container
-      vars:
-        redmine_port: 3000
       community.docker.docker_container:
         name: redmine-app
         image: redmine
@@ -30,3 +28,10 @@
         container_default_behavior: no_defaults
         pull: true
         env_file: .env
+
+- name: Setting up Datadog agent
+  hosts: webservers
+  remote_user: root
+  roles:
+    - role: datadog.datadog
+  
